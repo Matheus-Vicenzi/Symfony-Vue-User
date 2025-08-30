@@ -1,0 +1,21 @@
+framework:
+    secret: '%env(APP_SECRET)%'
+
+    session:
+        enabled: true
+        cookie_secure: false      # porque está usando HTTP
+        cookie_samesite: lax      # lax é suficiente para HTTP local
+        cookie_httponly: true
+        cookie_lifetime: 0
+        name: 'PHPSESSID'
+        cookie_domain: null
+
+
+    #esi: true
+    #fragments: true
+
+when@test:
+    framework:
+        test: true
+        session:
+            storage_factory_id: session.storage.factory.mock_file
