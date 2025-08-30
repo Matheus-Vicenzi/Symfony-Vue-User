@@ -58,4 +58,12 @@ class AuthService
             'logged_in_at' => $session->get('logged_in_at')
         ] : null;
     }
+
+    public function logout(): void
+    {
+        $session = $this->requestStack->getSession();
+        $session->invalidate();
+
+        $this->logger->info('Usuário fez logout e sessão foi invalidada.');
+    }
 }

@@ -1,7 +1,11 @@
 <template>
-  <div class="home-page">
-    <h1>Bem-vindo, {{ user?.name }}</h1>
-    <p>Email: {{ user?.email }}</p>
+  <div class="container mt-5">
+    <div class="card mx-auto" style="max-width: 600px;">
+      <div class="card-body text-center">
+        <h2 class="card-title mb-3">Bem-vindo(a), {{ user?.name }}!</h2>
+        <p class="card-text mb-2">Seu email registrado: <strong>{{ user?.email }}</strong></p>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -16,16 +20,16 @@ const user = ref<UserOutput | null>(null);
 
 onMounted(async () => {
   const session = getUserSession();
-  console.log('Session:', session);
   if (!session) {
     router.push('/login');
     return;
   }
 
   try {
-    const user = await getUser(session.id);
+    const userData = await getUser(session.id);
+    user.value = userData;
   } catch (err) {
-    console.error(err);
+    alert(err);
     router.push('/login');
   }
 });

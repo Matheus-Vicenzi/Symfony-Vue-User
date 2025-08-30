@@ -1,3 +1,5 @@
+import { computed } from "vue";
+
 export interface UserSession {
   id: number;
   name: string;
@@ -22,3 +24,5 @@ export const setUserSession = (user: UserSession) => {
 export const clearUserSession = () => {
   localStorage.removeItem('user_session');
 };
+
+export const isLoggedIn = computed(() => !!getUserSession())

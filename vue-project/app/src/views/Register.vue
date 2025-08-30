@@ -1,29 +1,31 @@
 <template>
-  <div class="register-page">
-    <h1>Cadastro de Usuário</h1>
-    <form @submit.prevent="handleSubmit">
-      <div>
-        <label for="name">Nome</label>
-        <input type="text" id="name" v-model="form.name" required />
-      </div>
+  <div class="card mx-auto" style="max-width:420px;">
+    <div class="card-body">
+      <h3 class="card-title mb-3">Cadastro de Usuário</h3>
+      <form @submit.prevent="handleSubmit">
+        <div class="mb-3">
+          <label for="name" class="form-label">Nome</label>
+          <input v-model="form.name" class="form-control" type="text" id="name" required />
+        </div>
 
-      <div>
-        <label for="email">Email</label>
-        <input type="email" id="email" v-model="form.email" required />
-      </div>
+        <div class="mb-3">
+          <label for="email" class="form-label">Email</label>
+          <input v-model="form.email" class="form-control" type="email" id="email" required />
+        </div>
 
-      <div>
-        <label for="password">Senha</label>
-        <input type="password" id="password" v-model="form.password" required />
-      </div>
+        <div class="mb-3">
+          <label for="password" class="form-label">Senha</label>
+          <input v-model="form.password" class="form-control" type="password" id="password" required />
+        </div>
 
-      <button type="submit" :disabled="loading">
-        {{ loading ? 'Cadastrando...' : 'Cadastrar' }}
-      </button>
-    </form>
+        <button class="btn btn-primary w-100" :disabled="loading">
+          {{ loading ? 'Cadastrando...' : 'Cadastrar' }}
+        </button>
 
-    <p v-if="errorMessage" class="error">{{ errorMessage }}</p>
-    <p v-if="successMessage" class="success">{{ successMessage }}</p>
+        <p v-if="errorMessage" class="text-danger mt-2">{{ errorMessage }}</p>
+        <p v-if="successMessage" class="text-success mt-2">{{ successMessage }}</p>
+      </form>
+    </div>
   </div>
 </template>
 

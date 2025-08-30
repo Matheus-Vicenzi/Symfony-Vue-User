@@ -1,68 +1,44 @@
 <template>
-  <div class="flex items-center justify-center min-h-screen bg-gray-100">
-    <div class="bg-white shadow-lg rounded-2xl p-8 w-full max-w-md">
-      <h1 class="text-2xl font-bold mb-6 text-center">Login</h1>
-      
-      <form @submit.prevent="handleLogin" class="space-y-4">
-        <div>
-          <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
-          <input
-            v-model="form.email"
-            type="email"
-            id="email"
-            required
-            class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-          />
+  <div class="card mx-auto" style="max-width:420px;">
+    <div class="card-body">
+      <h3 class="card-title mb-3">Login</h3>
+      <form @submit.prevent="handleLogin">
+        <div class="mb-3">
+          <label class="form-label">Email</label>
+          <input v-model="form.email" class="form-control" type="email" />
         </div>
-
-        <div>
-          <label for="password" class="block text-sm font-medium text-gray-700">Senha</label>
-          <input
-            v-model="form.password"
-            type="password"
-            id="password"
-            required
-            class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-          />
+        <div class="mb-3">
+          <label class="form-label">Senha</label>
+          <input v-model="form.password" class="form-control" type="password" />
         </div>
-
-        <button
-          type="submit"
-          :disabled="loading"
-          class="w-full flex justify-center py-2 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 disabled:opacity-50"
-        >
-          {{ loading ? 'Entrando...' : 'Entrar' }}
-        </button>
-
-        <p v-if="error" class="text-red-500 text-sm text-center mt-2">
-          {{ error }}
-        </p>
+        <button class="btn btn-primary w-100" :disabled="loading">{{ loading ? 'Entrando...' : 'Entrar' }}</button>
       </form>
-
-      <div class="mt-6">
-        <button
-          @click="fetchUser"
-          class="w-full flex justify-center py-2 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-green-600 hover:bg-green-700"
-        >
-          Buscar Usuário
-        </button>
-      </div>
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { reactive, ref } from "vue";
+import { reactive, ref, watch } from "vue";
 import { doLogin } from "@/api/auth";
-import { useRouter } from "vue-router";
-import { getUserSession, setUserSession } from "@/services/session";
-import { httpAuth } from "@/api/http";
-import { getUser } from "@/api/user";
+import { useRoute, useRouter } from "vue-router";
+import { setUserSession } from "@/services/session";
+import { showToast } from "@/services/toast";
 
 const router = useRouter();
+const route = useRoute();
 const form = reactive({ email: "", password: "" });
 const loading = ref(false);
 const error = ref<string | null>(null);
+
+watch(
+  () => route.query.msg,
+  (newVal) => {
+    if (newVal === 'login-required') {
+      showToast('Você precisa estar logado para acessar essa página.', 'warning');
+    }
+  },
+  { immediate: true }
+)
 
 const handleLogin = async () => {
   loading.value = true;
@@ -70,31 +46,14 @@ const handleLogin = async () => {
 
   try {
     const session = await doLogin(form);
-    const response = await httpAuth.get('/test');
-    console.log(await response.data);  // deve logar { ok: true }
-    console.log(session);
+
     setUserSession(session);
+    router.push("/");
   } catch (err: any) {
     error.value = "Email ou senha inválidos.";
+    showToast(`Erro ao fazer login: ${error.value}`, 'danger');
   } finally {
     loading.value = false;
-  }
-};
-
-const fetchUser = async () => {
-  const session = getUserSession();
-  if (!session) {
-    alert("Você precisa fazer login primeiro.");
-    return;
-  }
-
-  try {
-    const userData = await getUser(session.id);
-    console.log("Usuário retornado:", userData);
-    alert(`Usuário: ${userData.name} (${userData.email})`);
-  } catch (err: any) {
-    console.error(err);
-    alert("Erro ao buscar usuário.");
   }
 };
 </script>

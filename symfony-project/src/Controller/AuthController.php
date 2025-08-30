@@ -24,4 +24,15 @@ class AuthController extends BaseController
         $sessionDTO = $this->authService->authenticate($loginDTO);
         return $this->json($sessionDTO);
     }
+
+    #[Route('/logout', name: 'api_auth_logout', methods: ['POST'])]
+    public function logout(): JsonResponse
+    {
+        $this->authService->logout();
+
+        return $this->json([
+            'success' => true,
+            'message' => 'Logout realizado com sucesso.'
+        ]);
+    }
 }
