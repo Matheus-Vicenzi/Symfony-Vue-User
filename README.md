@@ -140,7 +140,7 @@ O frontend foi estruturado para promover **reutilização, manutenção e consis
 
 ## Comandos Úteis
 
-- **Subir containers**
+- **Subir containers/rodar o projeto**
 ```bash
 docker compose -f docker-compose.prod.yaml up --build
 ```
