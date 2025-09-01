@@ -16,6 +16,10 @@ COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
 COPY . .
 
+COPY entrypoint.sh /usr/local/bin/entrypoint.sh
+
+RUN chmod +x /usr/local/bin/entrypoint.sh
+
 RUN composer install --no-dev --optimize-autoloader --no-scripts \
     && mkdir -p var/cache var/log \
     && chown -R www-data:www-data var
@@ -23,4 +27,4 @@ RUN composer install --no-dev --optimize-autoloader --no-scripts \
 USER www-data
 
 EXPOSE 8000
-CMD ["php", "-S", "0.0.0.0:8000", "-t", "public"]
+ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]

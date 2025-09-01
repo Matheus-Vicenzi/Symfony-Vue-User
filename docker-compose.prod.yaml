@@ -2,6 +2,8 @@ services:
   backend:
     build: ./backend
     container_name: symfony_backend
+    depends_on:
+      - mysql
     environment:
       DATABASE_URL: mysql://symfony_user:symfony_pass@mysql:3306/symfony_db
     networks:
