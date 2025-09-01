@@ -23,7 +23,7 @@ class User extends BaseEntity implements UserInterface, PasswordAuthenticatedUse
 
     public function __construct(string $name, Email $email, string $password)
     {
-        parent::__construct(); // Chama o construtor da BaseEntity
+        parent::__construct();
         
         $this->name = $name;
         $this->email = $email->getValue();
@@ -101,7 +101,6 @@ class User extends BaseEntity implements UserInterface, PasswordAuthenticatedUse
 
     public function eraseCredentials(): void
     {
-        // Limpar dados sensíveis temporários se houver
         return;
     }
 

@@ -24,29 +24,23 @@ final readonly class Email
 
     public function isValid(string $email): bool
     {
-        // Trim e verificar se não está vazio
         $email = trim($email);
         if (empty($email)) {
             return false;
         }
 
-        // Validação básica do PHP
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
             return false;
         }
 
-        // Validações adicionais
-        // Verificar se não tem espaços
         if (str_contains($email, ' ')) {
             return false;
         }
 
-        // Verificar tamanho máximo (RFC 5321)
         if (strlen($email) > 254) {
             return false;
         }
 
-        // Verificar se tem pelo menos um ponto no domínio
         $parts = explode('@', $email);
         if (count($parts) !== 2) {
             return false;
@@ -54,12 +48,10 @@ final readonly class Email
 
         [$localPart, $domain] = $parts;
 
-        // Local part não pode estar vazio ou ser muito longo
         if (empty($localPart) || strlen($localPart) > 64) {
             return false;
         }
 
-        // Domínio deve ter pelo menos um ponto
         if (!str_contains($domain, '.') || strlen($domain) < 4) {
             return false;
         }
