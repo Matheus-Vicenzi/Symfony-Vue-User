@@ -1,0 +1,41 @@
+services:
+  backend:
+    build: ./backend
+    container_name: symfony_backend
+    environment:
+      DATABASE_URL: mysql://symfony_user:symfony_pass@mysql:3306/symfony_db
+    networks:
+      - symfony_network
+
+  mysql:
+    image: mysql:8.0
+    container_name: symfony_mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root_password
+      MYSQL_DATABASE: symfony_db
+      MYSQL_USER: symfony_user
+      MYSQL_PASSWORD: symfony_pass
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - symfony_network
+
+  nginx:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    depends_on:
+      - backend
+    volumes:
+      - ./backend/public:/var/www/html/public:ro
+    ports:
+      - "80:80"
+    networks:
+      - symfony_network
+
+volumes:
+  mysql_data:
+
+networks:
+  symfony_network:
+    driver: bridge

@@ -1,5 +1,4 @@
 services:
-  # Serviço PHP com Symfony (similar ao Spring Boot)
   php:
     image: php:8.2-cli
     container_name: symfony_app
@@ -7,7 +6,7 @@ services:
     ports:
       - "8000:8000"
     volumes:
-      - ./:/var/www/html
+      - ./backend:/var/www/html
       - ./docker/php/php.ini:/usr/local/etc/php/php.ini
     environment:
       - DATABASE_URL=mysql://symfony_user:symfony_pass@mysql:3306/symfony_db
@@ -35,7 +34,6 @@ services:
         tail -f /dev/null
       "
 
-  # Banco de dados MySQL
   mysql:
     image: mysql:8.0
     container_name: symfony_mysql
@@ -52,7 +50,6 @@ services:
     networks:
       - symfony_network
 
-  # PHPMyAdmin para gerenciar o banco
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
     container_name: symfony_phpmyadmin
@@ -72,7 +69,7 @@ services:
     container_name: vue_app
     working_dir: /app
     volumes:
-      - ./vue-project/app:/app
+      - ./frontend:/app
     ports:
       - "5173:5173"
     tty: true
