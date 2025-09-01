@@ -144,3 +144,25 @@ O frontend foi estruturado para promover **reutilização, manutenção e consis
 ```bash
 docker compose -f docker-compose.prod.yaml up --build
 ```
+
+---
+
+## Implementações Futuras
+
+- **Testes Unitários:**  
+  Planejar a cobertura de testes unitários para garantir que as funcionalidades da aplicação funcionem corretamente e reduzir a ocorrência de bugs.
+
+- **Documentação da API (Swagger / OpenAPI):**  
+  Criar documentação detalhada das APIs para facilitar o uso por outros desenvolvedores, garantindo padronização e facilidade de integração.
+
+- **Observabilidade:**  
+  Implementar ferramentas de monitoramento e análise de logs, como **Elastic Stack** (Elasticsearch, Logstash e Kibana) ou **Grafana Stack** (Grafana + Prometheus + Loki), para acompanhar o desempenho da aplicação, identificar erros e otimizar recursos.
+
+
+---
+
+## Observações
+
+- Os arquivos de configuração, como variáveis de ambiente, estão incluídos no projeto para facilitar a execução e testes.  
+- **Importante:** Em um ambiente de produção real, esses arquivos deveriam ser sigilosos e protegidos, evitando exposição de informações sensíveis como senhas, chaves de API ou credenciais de banco de dados.
+
