@@ -53,7 +53,7 @@ class UserController extends BaseController
         $userOutputDTO = new UserOutputDTO(
             $user->getId(),
             $user->getName(),
-            $user->getEmail()
+            $user->getEmail()->getValue()
         );
 
         return $this->json($userOutputDTO);

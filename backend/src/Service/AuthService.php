@@ -28,13 +28,13 @@ class AuthService
 
         $session = $this->requestStack->getSession();
         $session->set('user_id', $user->getId());
-        $session->set('user_email', $user->getEmail());
+        $session->set('user_email', $user->getEmail()->getValue());
         $session->set('user_name', $user->getName());
         $session->set('logged_in_at', (new \DateTimeImmutable())->format('Y-m-d H:i:s'));
 
         return new SessionDTO(
             $user->getId(),
-            $user->getEmail(),
+            $user->getEmail()->getValue(),
             $user->getName(),
             new \DateTimeImmutable($session->get('logged_in_at'))
         );

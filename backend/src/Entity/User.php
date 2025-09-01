@@ -8,6 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 
+
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 class User extends BaseEntity implements UserInterface, PasswordAuthenticatedUserInterface
 {
@@ -20,12 +21,12 @@ class User extends BaseEntity implements UserInterface, PasswordAuthenticatedUse
     #[ORM\Column(length: 255)]
     private ?string $password = null;
 
-    public function __construct(string $name, string $email, string $password)
+    public function __construct(string $name, Email $email, string $password)
     {
         parent::__construct(); // Chama o construtor da BaseEntity
         
         $this->name = $name;
-        $this->email = $email;
+        $this->email = $email->getValue();
         $this->password = $password;
         $this->isValid();
     }
@@ -51,12 +52,12 @@ class User extends BaseEntity implements UserInterface, PasswordAuthenticatedUse
         return $this;
     }
 
-    public function getEmail(): ?string
+    public function getEmail(): ?Email
     {
-        return $this->email;
+        return new Email($this->email);
     }
 
-    public function setEmail(string $email): self
+    public function setEmail(Email $email): self
     {
         $this->email = $email;
         return $this;
@@ -104,7 +105,7 @@ class User extends BaseEntity implements UserInterface, PasswordAuthenticatedUse
         return;
     }
 
-    public function toString()
+    public function toString(): string|null
     {
         return $this->name;
     }
