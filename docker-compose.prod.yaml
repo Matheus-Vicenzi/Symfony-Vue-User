@@ -3,7 +3,8 @@ services:
     build: ./backend
     container_name: symfony_backend
     depends_on:
-      - mysql
+      mysql:
+        condition: service_healthy
     environment:
       DATABASE_URL: mysql://symfony_user:symfony_pass@mysql:3306/symfony_db
     networks:
@@ -21,6 +22,12 @@ services:
       - mysql_data:/var/lib/mysql
     networks:
       - symfony_network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
 
   nginx:
     build:

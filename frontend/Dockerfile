@@ -10,7 +10,7 @@ USER nodeuser
 
 COPY --chown=nodeuser:nodeuser package*.json ./
 
-RUN npm install --omit=dev
+RUN npm install
 
 COPY --chown=nodeuser:nodeuser . .
 

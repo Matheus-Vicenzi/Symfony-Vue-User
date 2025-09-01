@@ -27,7 +27,7 @@ O projeto foi dockerizado em **3 containers principais**:
 
 2. **Frontend (Vue + Vite)**  
    - Node 20-slim
-   - Build do frontend realizado dentro do container (`npm install --omit=dev` + `npm run build`)
+   - Build do frontend realizado dentro do container (`npm install` + `npm run build`)
    - O conteúdo final do `dist/` é copiado para o Nginx
 
 3. **Nginx**  
