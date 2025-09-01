@@ -34,7 +34,7 @@ import { defineComponent, reactive, ref } from 'vue';
 import { createUser, type UserInput } from '../api/user';
 
 export default defineComponent({
-  name: 'Register',
+  name: 'RegisterView',
   setup() {
     const form = reactive<UserInput>({
       name: '',

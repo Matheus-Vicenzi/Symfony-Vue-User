@@ -49,7 +49,8 @@ const handleLogin = async () => {
 
     setUserSession(session);
     router.push("/");
-  } catch (err: any) {
+  } catch (err) {
+    console.error(err)
     error.value = "Email ou senha inválidos.";
     showToast(`Erro ao fazer login: ${error.value}`, 'danger');
   } finally {

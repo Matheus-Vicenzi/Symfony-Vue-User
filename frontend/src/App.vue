@@ -10,6 +10,6 @@
 
 <script setup lang="ts">
 import DefaultLayout from '@/components/DefaultLayout.vue'
-import Toast from './components/Toast.vue'
+import Toast from './components/ToastComponent.vue'
 import { toast } from '@/services/toast'
 </script>
