@@ -145,6 +145,8 @@ O frontend foi estruturado para promover **reutilização, manutenção e consis
 docker compose -f docker-compose.prod.yaml up --build
 ```
 
+- Após subir a aplicação, acesse http://localhost:80
+
 ---
 
 ## Implementações Futuras
